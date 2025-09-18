@@ -11,20 +11,33 @@
   <style>
     :root {
       --bg: #ffffff;
-      --fg: #1a1a1a;
-      --muted: #444;
-      --brand: #004aad;
-      --brand-contrast: #003377;
-      --accent: #f0a500;
+      --fg: #111111;
+      --muted: #444444;
+      --brand: #002f6c; /* sehr dunkles Blau */
+      --brand-contrast: #001d40; /* noch dunkler */
+      --accent: #ffb000; /* Gelb/Orange für Akzent */
       --surface: #f6f7f8;
       --border: #d9dadd;
       --focus: #ffbf47;
-      --link: #004aad;
-      --link-visited: #6f42c1;
+      --link: #002f6c;
+      --link-visited: #551a8b; /* kräftiges Violett */
       --radius: 14px;
       --shadow: 0 6px 18px rgba(0,0,0,.08);
       --font-size: 18px;
       --maxw: 96ch;
+    }
+
+    [data-theme="high-contrast"] {
+      --bg: #000000;
+      --fg: #ffffff;
+      --muted: #e6e6e6;
+      --brand: #ffff00; /* Gelber Button-Hintergrund */
+      --brand-contrast: #cccc00;
+      --surface: #000000;
+      --border: #ffffff;
+      --link: #00ffff; /* Cyan */
+      --link-visited: #ffff00; /* Gelb */
+      --focus: #ffff00;
     }
 
     html { font-size: var(--font-size); }
@@ -40,9 +53,9 @@
     /* Navigation */
     .nav-container { display: flex; justify-content: space-between; align-items: center; }
     nav ul { display: flex; gap: 1rem; list-style: none; padding: 0; margin: 0; }
-    nav a { color: var(--fg); text-decoration: underline; }
+    nav a { color: var(--link); text-decoration: underline; }
 
-    .menu-toggle { background: none; border: none; cursor: pointer; font-size: 1.8rem; }
+    .menu-toggle { background: none; border: none; cursor: pointer; font-size: 1.8rem; color: var(--fg); }
     .menu-toggle:focus-visible { outline: 3px solid var(--focus); }
     nav { display: none; }
     nav.open { display: block; position: absolute; top: 60px; left: 0; right: 0; background: var(--surface); box-shadow: var(--shadow); padding: 1rem; }
@@ -54,11 +67,12 @@
       nav ul { flex-direction: row; }
     }
 
-    .btn { display: inline-block; background: var(--brand); color: #fff; padding: .7rem 1.2rem; border-radius: var(--radius); font-weight: 600; text-decoration: none; box-shadow: var(--shadow); transition: background .2s ease; }
+    .btn { display: inline-block; background: var(--brand); color: var(--fg); padding: .7rem 1.2rem; border-radius: var(--radius); font-weight: 700; text-decoration: none; box-shadow: var(--shadow); transition: background .2s ease, color .2s ease; }
+    body:not([data-theme="high-contrast"]) .btn { color: #ffffff; }
     .btn:hover { background: var(--brand-contrast); }
 
     .controls { display: flex; gap: .5rem; }
-    .controls button { background: var(--brand); color: #fff; border: none; border-radius: var(--radius); padding: .4rem .7rem; cursor: pointer; font-weight: 600; }
+    .controls button { background: var(--brand); color: #ffffff; border: none; border-radius: var(--radius); padding: .4rem .7rem; cursor: pointer; font-weight: 600; }
     .controls button:hover { background: var(--brand-contrast); }
 
     .hero { background: linear-gradient(180deg, var(--surface), #fff); padding: 3rem 1.5rem; text-align: center; }
@@ -71,7 +85,7 @@
 
     form { display: grid; gap: 1rem; background: var(--surface); padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); }
     form label { font-weight: 600; margin-bottom: .25rem; display: block; }
-    form input, form textarea { width: 100%; padding: .6rem; border-radius: var(--radius); border: 1px solid var(--border); font-size: 1rem; }
+    form input, form textarea { width: 100%; padding: .6rem; border-radius: var(--radius); border: 1px solid var(--border); font-size: 1rem; background: var(--bg); color: var(--fg); }
     form button { justify-self: start; }
 
     footer { background: var(--surface); border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 1.5rem; }
@@ -81,11 +95,11 @@
 <body>
   <a href="#main" class="skip-link">Zum Inhalt springen</a>
 
-  <header>
+  <header role="banner">
     <div class="wrap nav-container">
-      <a href="https://seo-experte-aachen.github.io/maler-aachen/" aria-current="page" style="font-weight:700; text-decoration:none; color:inherit">Maler Aachen</a>
+      <a href="/" aria-current="page" style="font-weight:700; text-decoration:none; color:inherit">Maler Aachen</a>
       <button class="menu-toggle" aria-expanded="false" aria-controls="mainnav">☰</button>
-      <nav id="mainnav" aria-label="Hauptnavigation">
+      <nav id="mainnav" role="navigation" aria-label="Hauptnavigation">
         <ul>
           <li><a href="#leistungen">Leistungen</a></li>
           <li><a href="#ueber-uns">Über uns</a></li>
@@ -108,7 +122,7 @@
     <a href="#kontakt" class="btn">Jetzt kostenlos beraten lassen</a>
   </section>
 
-  <main id="main" class="wrap">
+  <main id="main" class="wrap" role="main">
     <section id="leistungen">
       <h2>Unsere Malerleistungen in Aachen</h2>
       <div class="card-grid">
@@ -157,7 +171,7 @@
     </section>
   </main>
 
-  <footer class="wrap">
+  <footer class="wrap" role="contentinfo">
     <p>© <span id="year"></span> Maler Aachen – Alle Rechte vorbehalten · <a href="https://www.profiausbau.com/impressum" target="_blank" rel="noopener">Impressum</a> · <a href="https://www.profiausbau.com/datenschutz" target="_blank" rel="noopener">Datenschutz</a></p>
   </footer>
 
@@ -210,3 +224,4 @@
   </script>
 </body>
 </html>
+
