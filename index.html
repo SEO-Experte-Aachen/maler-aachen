@@ -15,12 +15,12 @@
       --muted: #444444;
       --brand: #002f6c; /* sehr dunkles Blau */
       --brand-contrast: #001d40; /* noch dunkler */
-      --accent: #ffb000; /* Gelb/Orange für Akzent */
+      --accent: #ffb000;
       --surface: #f6f7f8;
       --border: #d9dadd;
       --focus: #ffbf47;
       --link: #002f6c;
-      --link-visited: #551a8b; /* kräftiges Violett */
+      --link-visited: #551a8b;
       --radius: 14px;
       --shadow: 0 6px 18px rgba(0,0,0,.08);
       --font-size: 18px;
@@ -31,12 +31,10 @@
       --bg: #000000;
       --fg: #ffffff;
       --muted: #e6e6e6;
-      --brand: #ffff00; /* Gelber Button-Hintergrund */
-      --brand-contrast: #cccc00;
       --surface: #000000;
       --border: #ffffff;
-      --link: #00ffff; /* Cyan */
-      --link-visited: #ffff00; /* Gelb */
+      --link: #00ffff;
+      --link-visited: #ffff00;
       --focus: #ffff00;
     }
 
@@ -67,13 +65,40 @@
       nav ul { flex-direction: row; }
     }
 
-    .btn { display: inline-block; background: var(--brand); color: var(--fg); padding: .7rem 1.2rem; border-radius: var(--radius); font-weight: 700; text-decoration: none; box-shadow: var(--shadow); transition: background .2s ease, color .2s ease; }
-    body:not([data-theme="high-contrast"]) .btn { color: #ffffff; }
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      background: var(--brand);
+      color: #ffffff;
+      padding: .7rem 1.2rem;
+      border-radius: var(--radius);
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+      transition: background .2s ease, color .2s ease;
+    }
     .btn:hover { background: var(--brand-contrast); }
 
+    [data-theme="high-contrast"] .btn {
+      background: #ffff00; /* Gelb */
+      color: #000000;      /* Schwarz */
+    }
+
     .controls { display: flex; gap: .5rem; }
-    .controls button { background: var(--brand); color: #ffffff; border: none; border-radius: var(--radius); padding: .4rem .7rem; cursor: pointer; font-weight: 600; }
+    .controls button {
+      background: var(--brand);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius);
+      padding: .4rem .7rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
     .controls button:hover { background: var(--brand-contrast); }
+    [data-theme="high-contrast"] .controls button {
+      background: #ffff00;
+      color: #000000;
+    }
 
     .hero { background: linear-gradient(180deg, var(--surface), #fff); padding: 3rem 1.5rem; text-align: center; }
     .hero h1 { font-size: 2rem; margin-bottom: .5rem; }
@@ -87,6 +112,10 @@
     form label { font-weight: 600; margin-bottom: .25rem; display: block; }
     form input, form textarea { width: 100%; padding: .6rem; border-radius: var(--radius); border: 1px solid var(--border); font-size: 1rem; background: var(--bg); color: var(--fg); }
     form button { justify-self: start; }
+    [data-theme="high-contrast"] form button {
+      background: #ffff00;
+      color: #000000;
+    }
 
     footer { background: var(--surface); border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 1.5rem; }
     footer p { margin: 0; }
@@ -224,4 +253,3 @@
   </script>
 </body>
 </html>
-
