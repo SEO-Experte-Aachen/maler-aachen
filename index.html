@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Maler Aachen – Ihr Profi für Innen- & Außenarbeiten</title>
-  <meta name="description" content="Maler Aachen – Professionelle Malerarbeiten, Fassaden, Innenräume, Tapezieren & Lackierungen. Ihr Malermeister für Aachen & Umgebung. Jetzt Kontakt aufnehmen!" />
-  <meta name="keywords" content="Maler Aachen, Malermeister Aachen, Fassaden streichen Aachen, Innenanstrich Aachen, Tapezieren Aachen, Lackierarbeiten Aachen" />
+  <title>Maler Aachen – Ihr Partner für Malerarbeiten</title>
+  <meta name="description" content="Maler Aachen – Professionelle Malerarbeiten, Fassaden, Innenräume, Tapezieren & Lackierungen. Ihr Maler für Aachen & Umgebung. Jetzt Kontakt aufnehmen!" />
+  <meta name="keywords" content="Maler Aachen, Malerbetrieb Aachen, Fassaden streichen Aachen, Innenanstrich Aachen, Tapezieren Aachen, Lackierarbeiten Aachen" />
   <link rel="canonical" href="https://www.beispielseite-aachen.de/" />
 
   <style>
@@ -13,9 +13,9 @@
       --bg: #ffffff;
       --fg: #1a1a1a;
       --muted: #444;
-      --brand: #004aad; /* kräftiges Blau */
+      --brand: #004aad;
       --brand-contrast: #003377;
-      --accent: #f0a500; /* Akzentfarbe */
+      --accent: #f0a500;
       --surface: #f6f7f8;
       --border: #d9dadd;
       --focus: #ffbf47;
@@ -26,24 +26,55 @@
       --font-size: 18px;
       --maxw: 96ch;
     }
+
     html { font-size: var(--font-size); }
     body { margin: 0; font-family: system-ui, Arial, sans-serif; color: var(--fg); background: var(--bg); line-height: 1.6; }
     :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
     .skip-link { position: absolute; left: -9999px; }
     .skip-link:focus { left: 1rem; top: 1rem; background: var(--focus); color: #000; padding: .5rem .75rem; border-radius: .5rem; z-index: 1000; }
-    header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; }
-    .wrap { max-width: var(--maxw); margin-inline: auto; padding: 1.5rem; }
+
+    header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .wrap { max-width: var(--maxw); margin-inline: auto; padding: 1rem 1.5rem; }
+
+    /* Navigation */
+    .nav-container { display: flex; justify-content: space-between; align-items: center; }
     nav ul { display: flex; gap: 1rem; list-style: none; padding: 0; margin: 0; }
     nav a { color: var(--fg); text-decoration: underline; }
+
+    .menu-toggle { background: none; border: none; cursor: pointer; font-size: 1.8rem; }
+    .menu-toggle:focus-visible { outline: 3px solid var(--focus); }
+    nav { display: none; }
+    nav.open { display: block; position: absolute; top: 60px; left: 0; right: 0; background: var(--surface); box-shadow: var(--shadow); padding: 1rem; }
+    nav.open ul { flex-direction: column; gap: .75rem; }
+
+    @media(min-width: 768px) {
+      .menu-toggle { display: none; }
+      nav { display: block !important; position: static; box-shadow: none; padding: 0; }
+      nav ul { flex-direction: row; }
+    }
+
     .btn { display: inline-block; background: var(--brand); color: #fff; padding: .7rem 1.2rem; border-radius: var(--radius); font-weight: 600; text-decoration: none; box-shadow: var(--shadow); transition: background .2s ease; }
     .btn:hover { background: var(--brand-contrast); }
+
+    .controls { display: flex; gap: .5rem; }
+    .controls button { background: var(--brand); color: #fff; border: none; border-radius: var(--radius); padding: .4rem .7rem; cursor: pointer; font-weight: 600; }
+    .controls button:hover { background: var(--brand-contrast); }
+
     .hero { background: linear-gradient(180deg, var(--surface), #fff); padding: 3rem 1.5rem; text-align: center; }
     .hero h1 { font-size: 2rem; margin-bottom: .5rem; }
     .hero p { color: var(--muted); max-width: 60ch; margin: 0 auto 1rem; }
+
     .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
     .card { background: var(--surface); padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); }
     .card h3 { margin-top: 0; }
-    footer { background: var(--surface); border-top: 1px solid var(--border); margin-top: 2rem; }
+
+    form { display: grid; gap: 1rem; background: var(--surface); padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+    form label { font-weight: 600; margin-bottom: .25rem; display: block; }
+    form input, form textarea { width: 100%; padding: .6rem; border-radius: var(--radius); border: 1px solid var(--border); font-size: 1rem; }
+    form button { justify-self: start; }
+
+    footer { background: var(--surface); border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 1.5rem; }
     footer p { margin: 0; }
   </style>
 </head>
@@ -51,9 +82,10 @@
   <a href="#main" class="skip-link">Zum Inhalt springen</a>
 
   <header>
-    <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;">
+    <div class="wrap nav-container">
       <a href="/" aria-current="page" style="font-weight:700; text-decoration:none; color:inherit">Maler Aachen</a>
-      <nav aria-label="Hauptnavigation">
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mainnav">☰</button>
+      <nav id="mainnav" aria-label="Hauptnavigation">
         <ul>
           <li><a href="#leistungen">Leistungen</a></li>
           <li><a href="#ueber-uns">Über uns</a></li>
@@ -62,11 +94,16 @@
           <li><a href="https://www.profiausbau.com/datenschutz" target="_blank" rel="noopener">Datenschutz</a></li>
         </ul>
       </nav>
+      <div class="controls" aria-label="Darstellung anpassen">
+        <button id="fontDec" aria-label="Schrift verkleinern">A−</button>
+        <button id="fontInc" aria-label="Schrift vergrößern">A+</button>
+        <button id="contrastToggle" aria-pressed="false" aria-label="Kontrast umschalten">Kontrast</button>
+      </div>
     </div>
   </header>
 
   <section class="hero">
-    <h1>Maler Aachen – Ihr Malermeister für Aachen & Umgebung</h1>
+    <h1>Maler Aachen – Ihr Partner für Malerarbeiten</h1>
     <p>Professionelle Malerarbeiten innen & außen: Fassaden streichen, Tapezieren, Lackierarbeiten & Renovierungen. Vertrauen Sie auf langjährige Erfahrung und höchste Qualität in Aachen.</p>
     <a href="#kontakt" class="btn">Jetzt kostenlos beraten lassen</a>
   </section>
@@ -77,11 +114,11 @@
       <div class="card-grid">
         <article class="card">
           <h3>Innenräume</h3>
-          <p>Ob Wohnzimmer, Büro oder Praxis – wir sorgen für frische Farben, sauberes Tapezieren und perfekte Oberflächen.</p>
+          <p>Wohnräume, Büros und Praxen – wir sorgen für frische Farben, sauberes Tapezieren und perfekte Oberflächen.</p>
         </article>
         <article class="card">
           <h3>Fassadenarbeiten</h3>
-          <p>Fassadenanstriche mit langlebigem Wetterschutz für Häuser in Aachen. Professionell, nachhaltig & modern.</p>
+          <p>Fassadenanstriche mit langlebigem Wetterschutz für Gebäude in Aachen. Modern, professionell & nachhaltig.</p>
         </article>
         <article class="card">
           <h3>Lackierarbeiten</h3>
@@ -89,25 +126,20 @@
         </article>
         <article class="card">
           <h3>Renovierungen</h3>
-          <p>Wir begleiten Sie von der Beratung bis zur Umsetzung – für ein schönes Zuhause oder repräsentative Geschäftsräume.</p>
+          <p>Von Beratung bis Umsetzung – für ein schönes Zuhause oder repräsentative Geschäftsräume.</p>
         </article>
       </div>
     </section>
 
     <section id="ueber-uns">
-      <h2>Warum Maler Aachen?</h2>
+      <h2>Über uns</h2>
       <p>Als Malerbetrieb in Aachen legen wir größten Wert auf Qualität, Barrierefreiheit und Kundenzufriedenheit. Mit modernen Techniken, hochwertigen Materialien und einem erfahrenen Team setzen wir Ihre Wünsche zuverlässig um.</p>
-      <ul>
-        <li>✅ Jahrzehntelange Erfahrung</li>
-        <li>✅ Fachgerechte Beratung & Planung</li>
-        <li>✅ Regionale Nähe in Aachen & Umgebung</li>
-      </ul>
     </section>
 
     <section id="kontakt">
       <h2>Kontakt aufnehmen</h2>
       <p>Fordern Sie jetzt Ihr unverbindliches Angebot für Malerarbeiten in Aachen an:</p>
-      <form aria-label="Kontaktformular" style="max-width:600px;">
+      <form aria-label="Kontaktformular">
         <div>
           <label for="name">Name</label>
           <input id="name" name="name" required />
@@ -129,29 +161,52 @@
     <p>© <span id="year"></span> Maler Aachen – Alle Rechte vorbehalten · <a href="https://www.profiausbau.com/impressum" target="_blank" rel="noopener">Impressum</a> · <a href="https://www.profiausbau.com/datenschutz" target="_blank" rel="noopener">Datenschutz</a></p>
   </footer>
 
-  <!-- LocalBusiness Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Maler Aachen",
-    "image": "https://www.beispielseite-aachen.de/logo.png",
-    "@id": "",
-    "url": "https://www.beispielseite-aachen.de/",
-    "telephone": "+49-241-123456",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Musterstraße 10",
-      "addressLocality": "Aachen",
-      "postalCode": "52062",
-      "addressCountry": "DE"
-    },
-    "openingHours": "Mo-Fr 08:00-17:00"
-  }
-  </script>
-
   <script>
+    // Jahr automatisch
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Schriftgröße steuern
+    const root = document.documentElement;
+    const getSize = () => parseFloat(getComputedStyle(root).fontSize);
+    const setSize = (px) => { root.style.fontSize = px + 'px'; localStorage.setItem('fontSize', String(px)); };
+    const savedSize = parseFloat(localStorage.getItem('fontSize'));
+    if (!Number.isNaN(savedSize) && savedSize) setSize(savedSize);
+
+    document.getElementById('fontInc').addEventListener('click', () => setSize(Math.min(getSize() + 2, 28)));
+    document.getElementById('fontDec').addEventListener('click', () => setSize(Math.max(getSize() - 2, 14)));
+
+    // Kontrast
+    const toggle = document.getElementById('contrastToggle');
+    const applyTheme = (high) => {
+      document.body.setAttribute('data-theme', high ? 'high-contrast' : '');
+      toggle.setAttribute('aria-pressed', String(high));
+      localStorage.setItem('highContrast', String(high));
+    };
+    const savedContrast = localStorage.getItem('highContrast');
+    if (savedContrast) applyTheme(savedContrast === 'true');
+    toggle.addEventListener('click', () => {
+      const active = toggle.getAttribute('aria-pressed') === 'true';
+      applyTheme(!active);
+    });
+
+    // Mobile Menü
+    const menuBtn = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('mainnav');
+    menuBtn.addEventListener('click', () => {
+      const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', String(!expanded));
+      nav.classList.toggle('open');
+      menuBtn.textContent = expanded ? '☰' : '✖';
+    });
+
+    // Menü automatisch schließen nach Klick
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      if (window.innerWidth < 768) {
+        nav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.textContent = '☰';
+      }
+    }));
   </script>
 </body>
 </html>
